@@ -1,11 +1,14 @@
 import { useState } from "react";
 import css from "./ContactForm.module.css";
-import { useDispatch } from "react-redux";
-import { addContactsAction } from "../../redux/contacts/contacts.slice";
+import { useDispatch,useSelector  } from "react-redux";
+import { addContactsAction } from "redux/operations";
+import { getContacts } from "redux/contacts/contactsSelector";
+import { toast } from "react-toastify";
 
 export const ContactForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -22,8 +25,17 @@ export const ContactForm = () => {
     }
   };
 
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      return toast.error(`Contact ${name} is already exist`);
+    }
     dispatch(addContactsAction({ name, number }));
     setName("");
     setNumber("");

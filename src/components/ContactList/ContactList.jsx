@@ -1,10 +1,10 @@
 import css from "./ContactList.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getFilteredContacts } from "redux/contacts/contactsSelector";
-import { deleteContactsAction } from "redux/contacts/contacts.slice";
+import { deleteContactsAction } from "redux/operations";
 
 export const ContactList = () => {
-  const filteredContacts = useSelector(getFilteredContacts);
+  const filteredContacts = useSelector(getFilteredContacts); 
   const dispatch = useDispatch();
   return (
     <div className={css.wraperContactList}>
